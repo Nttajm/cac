@@ -9,6 +9,25 @@
     --bs-6: #ffffff;
     --bs-7: #d8354a;
     --bs-8: #72BF78;
+
+    --bsl-1: #6fd0d2;
+    --bsl-2: #9a4de3;
+    --bsl-3: #f06a8e;
+    --bsl-4: #fc8f5e;
+    --bsl-5: #555555;
+    --bsl-6: #ffffff;
+    --bsl-7: #e06b7a;
+    --bsl-8: #8cd597;
+
+    --bsg-1: linear-gradient(45deg, #6fd0d2, #35b3b8);
+    --bsg-2: linear-gradient(45deg, #9a4de3, #7113c9);
+    --bsg-3: linear-gradient(45deg, #f06a8e, #EB3678);
+    --bsg-4: linear-gradient(45deg, #fc8f5e, #FB773C);
+    --bsg-5: linear-gradient(45deg, #555555, #2b2b2b);
+    --bsg-6: linear-gradient(45deg, #ffffff, #d9d9d9);
+    --bsg-7: linear-gradient(45deg, #e06b7a, #d8354a);
+    --bsg-8: linear-gradient(45deg, #8cd597, #72BF78);
+
     font-size: 18px;
 }
 
@@ -168,6 +187,7 @@ main {
     padding: 0.6rem 1rem;
     border-radius: 40rem;
     display: flex;
+    justify-content: center;
     color: var(--bs-6);
     font-weight: 600;
     font-size: 1rem;
@@ -224,4 +244,26 @@ main {
     z-index: 1;
     background: rgb(255,255,255);
 background: linear-gradient(180deg, rgba(255,255,255,0) 0%, rgba(0, 0, 0, 0.61) 100%);
+}
+
+
+/* Screen breakpoints */
+@media (max-width: 576px) {
+    /* Extra small devices (phones, less than 576px) */
+}
+
+@media (min-width: 576px) and (max-width: 768px) {
+    /* Small devices (tablets, 576px and up) */
+}
+
+@media (min-width: 768px) and (max-width: 992px) {
+    /* Medium devices (small laptops, 768px and up) */
+}
+
+@media (min-width: 992px) and (max-width: 1200px) {
+    /* Large devices (laptops/desktops, 992px and up) */
+}
+
+@media (min-width: 1200px) {
+    /* Extra large devices (large laptops and desktops, 1200px and up) */
 }

@@ -2,12 +2,31 @@
     transition: rotate(180deg);
   }
 
-  body {
-    background-color: rgb(160, 139, 194);
+  @font-face {
+    font-family: "SanFrancisco";
+    src:
+      url("https://cdn.rawgit.com/AllThingsSmitty/fonts/25983b71/SanFrancisco/sanfranciscodisplay-regular-webfont.woff2") format("woff2"),
+      url("https://cdn.rawgit.com/AllThingsSmitty/fonts/25983b71/SanFrancisco/sanfranciscodisplay-regular-webfont.woff") format("woff");
+  }
+  
+  body {  
+    font-family: -apple-system, 
+      BlinkMacSystemFont, 
+      "Segoe UI", 
+      Roboto, 
+      Oxygen-Sans, 
+      Ubuntu, 
+      Cantarell, 
+      "Helvetica Neue", 
+      sans-serif;
+    font-weight: normal;
+    margin: 0;
+    background-color: rgb(112, 103, 126);
   }
 
   nav {
     position: fixed;
+    top: 0;
   }
 
 .chat-nav {
@@ -71,23 +90,18 @@ input::placeholder {
   color: var(--bs-6);
 }
 
-main {
-  height: 100%;
-  overflow: auto;
-}
-
 
 main {
   display: flex;
   flex-direction: column;
+  height: 100%;
+  overflow: auto;
   gap: 0.5rem;
   width: 100%;
-  max-width: 600px;
-  margin: 0 auto;
   padding: 1rem;
   border-radius: 1rem;
   overflow-y: auto;
-  height: 80vh;
+  margin-top: 4rem;
   margin-bottom: 3rem;
 }
 
@@ -108,10 +122,11 @@ main {
 
 .received {
   align-self: flex-start;
-  background-color: #e1e1e1;
+  background-color: #f59696;
   color: black;
 }
 
+/* Remove the redundant and conflicting styles */
 .timestamp {
   font-size: 0.75rem;
   margin-top: 0.25rem;
@@ -124,5 +139,47 @@ main {
   background-color: var(--bs-4);
   padding: 0.5rem;
   border-radius: 40rem;
-} 
+}
 
+/* Adjusting consecutive .received messages to reduce margin overlap */
+.received:not(:first-child) {
+  margin-top: 0.25rem;
+}
+
+.received:last-child {
+  margin-bottom: 0.5rem;
+}
+
+.conter {
+  display: flex;
+  width: 100%;
+  height: auto;
+}
+
+.chatroom {
+  display: none;
+}
+
+
+/* Screen breakpoints */
+@media (max-width: 576px) {
+  /* Extra small devices (phones, less than 576px) */
+}
+
+@media (min-width: 576px) and (max-width: 768px) {
+  .chatroom{
+    display: flex;
+  }
+}
+
+@media (min-width: 768px) and (max-width: 992px) {
+  /* Medium devices (small laptops, 768px and up) */
+}
+
+@media (min-width: 992px) and (max-width: 1200px) {
+  /* Large devices (laptops/desktops, 992px and up) */
+}
+
+@media (min-width: 1200px) {
+  /* Extra large devices (large laptops and desktops, 1200px and up) */
+}
