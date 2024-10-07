@@ -1,0 +1,128 @@
+.stand_er-reverse-item {
+    transition: rotate(180deg);
+  }
+
+  body {
+    background-color: rgb(160, 139, 194);
+  }
+
+  nav {
+    position: fixed;
+  }
+
+.chat-nav {
+    display: flex;
+    flex-direction: row !important;
+    gap: 0.5rem;
+    
+}
+
+.chat-dis {
+  display: flex;
+  flex-direction: row;
+  gap: 0.5rem;
+  align-items: center;
+  background-color: var(--bs-4);
+  width: 100%;
+  border-radius: 4rem;
+  justify-content: center;
+}
+
+.people img {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.people img:not(:first-child) {
+    margin-left: -20px;
+}
+
+.form {
+  display: flex;
+  gap: 0.5rem;
+  width: calc(100vw - 1rem);
+  align-items: center;
+  justify-content: center;
+  padding: 0.5rem;
+  position: fixed;
+  bottom: 0;
+}
+
+input {
+  color: var(--bs-6);
+    display: flex;
+    flex-direction: column;
+    width: calc(100vw - 1rem);
+    padding: 0.8rem;
+    border-radius: 2.5rem;
+    background-color: var(--bs-2);
+    border: none;
+    outline: none;
+    font-size: 1rem;
+}
+
+.status {
+  font-size: 0.8rem;
+}
+
+input::placeholder {
+  color: var(--bs-6);
+}
+
+main {
+  height: 100%;
+  overflow: auto;
+}
+
+
+main {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  width: 100%;
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 1rem;
+  border-radius: 1rem;
+  overflow-y: auto;
+  height: 80vh;
+  margin-bottom: 3rem;
+}
+
+.message {
+  display: flex;
+  flex-direction: column;
+  max-width: 70%;
+  padding: 0.5rem;
+  border-radius: 1rem;
+  position: relative;
+}
+
+.sent {
+  align-self: flex-end;
+  background-color: var(--bs-4);
+  color: white;
+}
+
+.received {
+  align-self: flex-start;
+  background-color: #e1e1e1;
+  color: black;
+}
+
+.timestamp {
+  font-size: 0.75rem;
+  margin-top: 0.25rem;
+  color: #555;
+  align-self: flex-end;
+}
+
+.link {
+  font-weight: 600;
+  background-color: var(--bs-4);
+  padding: 0.5rem;
+  border-radius: 40rem;
+} 
+

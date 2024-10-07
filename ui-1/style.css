@@ -1,0 +1,66 @@
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+
+}
+
+h1 {
+    font-family: roboto ;
+}
+
+:root {
+    font-size: 30px;
+}
+
+.sign-up {
+    display: flex;
+    justify-content: space-between;
+    flex-direction: column;
+    align-items: center;
+    height: 100vh;
+}
+
+.title-sec {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    background-color: rgb(236, 44, 124);
+    width: 100%;
+    align-items: center;
+}
+
+.sign-buttons {
+    background-color: #7113c9;
+    width: 100%;
+    height: 50%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 1rem;
+    box-sizing: border-box;
+}
+
+.sign-buttons button {
+    background-color: #000000;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 50px;
+    font-size: 1rem;
+    cursor: pointer;
+    width: 100%;
+    color: white;
+    font-weight: 600;
+}
+
+.sub {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 20px;
+    font-size: 0.5rem;
+    color: white;
+    font-family: roboto;
+}
