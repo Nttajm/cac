@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="main.css">
+    <link rel="stylesheet" href="https://lcnjoel.com/css/standard.css">
+    <title>Sign in</title>
+</head>
+<body>
+    <div class="slides">
+        <div class="form-sec active-slide" id="slide-1">
+            <form action="">
+                <div class="dots">
+                    <div class="dot active dot-1"></div>
+                    <div class="dot dot-2"></div>
+                    <div class="dot dot-3"></div>
+                </div>
+                <h1>Let's get to know you!</h1>
+                <input type="text" id="inp-2" placeholder="First name">
+                <input type="text" id="inp-2" placeholder="Last name">
+                <input type="text" id="inp-2" placeholder="prefered name... (optional)">
+                <input type="text" id="inp-2" placeholder="username...">
+                <div class="how">
+                    <!-- <span>Your profile will be:</span>
+                    <div>
+                        <span>No You</span>
+                        <span>nouyou#2123</span>
+                    </div> -->
+                </div>
+            </form>
+            <div class="button-sec">
+                <button class="btn-1 continue-btn">Continue</button>
+            </div>
+        </div>
+         <div class="form-sec" id="slide-2">
+            <div class="intrests">
+                <h1>What subjects are you interested in?</h1>
+                <div class="intrests-sec">
+                    <div class="intrest">
+                        <input type="checkbox" name="" id="intrest">
+                        <label for="intrest">Mathematics</label>
+                    </div>
+                    <div class="intrest">
+                        <input type="checkbox" name="" id="intrest">
+                        <label for="intrest">Science</label>
+                    </div>
+                    <div class="intrest">
+                        <input type="checkbox" name="" id="intrest">
+                        <label for="intrest">History</label>
+                    </div>
+                    <div class="intrest">
+                        <input type="checkbox" name="" id="intrest">
+                        <label for="intrest">Geography</label>
+                    </div>
+                    <div class="intrest">
+                        <input type="checkbox" name="" id="intrest">
+                        <label for="intrest">English</label>
+                    </div>
+                    <div class="intrest">
+                        <input type="checkbox" name="" id="intrest">
+                        <label for="intrest">Physical Education</label>
+                    </div>
+                    <div class="intrest">
+                        <input type="checkbox" name="" id="intrest">
+                        <label for="intrest">Art</label>
+                    </div>
+                    <div class="intrest">
+                        <input type="checkbox" name="" id="intrest">
+                        <label for="intrest">Music</label>
+                    </div>
+                    <div class="intrest">
+                        <input type="checkbox" name="" id="intrest">
+                        <label for="intrest">Computer Science</label>
+                    </div>
+                </div>
+            </div>
+            <div class="button-sec">
+                <button class="btn-1 back-btn">Back</button>
+                <button class="btn-1 continue-btn">Continue</button>
+            </div>
+        </div>
+        <div class="form-sec" id="slide-3">
+            <form action="">
+                <h2>Connected with a School or Space?</h2>
+                <h2>search for you school/space here</h2>
+                <input type="text" class="ani-search" placeholder="Search...">
+                <span class="txt-1">Setup later ></span>
+            </form>
+            <div class="button-sec">
+                <button class="btn-1 back-btn">Back</button>
+                <button class="btn-1 non-available continue-btn">Continue</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+       document.addEventListener('DOMContentLoaded', function () {
+    let currentSlide = 0;
+    const slides = document.querySelectorAll('.form-sec');
+    const dots = document.querySelectorAll('.dot');
+
+    // Event listener for "Continue" buttons
+    document.querySelectorAll('.continue-btn').forEach(button => {
+        button.addEventListener('click', (e) => {
+            if (button.classList.contains('available')) {
+                changeSlide(currentSlide + 1);
+            }
+        });
+    });
+
+    // Event listener for "Back" buttons
+    document.querySelectorAll('.back-btn').forEach(button => {
+        button.addEventListener('click', () => {
+            changeSlide(currentSlide - 1);
+        });
+    });
+
+    // Function to change the slide
+    function changeSlide(nextSlide) {
+        if (nextSlide >= 0 && nextSlide < slides.length) {
+            slides[currentSlide].classList.remove('active-slide');
+            dots[currentSlide].classList.remove('active');
+            currentSlide = nextSlide;
+            slides[currentSlide].classList.add('active-slide');
+            dots[currentSlide].classList.add('active');
+            checkFields();
+        }
+    }
+
+    // Function to check if all required fields are filled
+    function checkFields() {
+        slides.forEach((slide, index) => {
+            const inputs = slide.querySelectorAll('input[type="text"]');
+            const continueButton = slide.querySelector('.continue-btn');
+            let allFilled = true;
+
+            inputs.forEach(input => {
+                if (input.type === 'text' && input.value.trim() === '') {
+                    allFilled = false;
+                } else if (input.type === 'checkbox' && !input.checked) {
+                    allFilled = false;
+                }
+            });
+
+            // Toggle 'available' class based on whether all fields are filled
+            if (!allFilled) {
+                continueButton.classList.add('non-available');
+            }
+        });
+    }
+
+    // Add event listeners to all input fields to trigger field checking on change
+    document.querySelectorAll('input[type="text"], input[type="checkbox"]').forEach(input => {
+        input.addEventListener('input', checkFields);
+    });
+
+    // Initial check on page load
+    checkFields();
+});
+
+    </script>
+    
+</body>
+</html>

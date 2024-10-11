@@ -28,6 +28,8 @@
     --bsg-7: linear-gradient(45deg, #e06b7a, #d8354a);
     --bsg-8: linear-gradient(45deg, #8cd597, #72BF78);
 
+    --js-mt: 
+
     font-size: 18px;
 }
 
@@ -102,7 +104,7 @@ nav {
     color: var(--bs-5);
 }
 
-main {
+.js-main-2 {
     width: 100vw;
     display: flex;
     flex-direction: column;
@@ -192,6 +194,7 @@ main {
     font-weight: 600;
     font-size: 1rem;
 }
+
 
 .content {
     display: flex;
