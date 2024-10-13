@@ -10,6 +10,9 @@
     --bs-5: #8e40b3;
     --bs-6: #ffffff;
     --bs-7: #c09d2b;
+    --bs-8: #303030;
+    --bs-9: #D0A866;
+    --bs-10: #51604291;
 }
 
 * {
@@ -193,4 +196,37 @@ input[type="checkbox"] {
 
 @media (min-width: 1200px) {
     /* Extra large devices (large laptops and desktops, 1200px and up) */
+}
+
+
+/* Path: ui-3/main.css */
+/* Compare this snippet from ui-3/home.css: */
+
+section {
+    padding: 2rem;
+}
+
+section h1 {
+    font-size: 3rem;
+    font-weight: 600;
+    margin: 1rem 0rem;
+}
+
+.bubble {
+    background-color: var(--bs-2);
+    border-radius: 1rem;
+}
+
+.inp-2 {
+    background-color: var(--bs-10);
+    padding: 1rem;
+    border-radius: 4rem;
+    box-sizing: border-box;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.247);  
+    font-size: 1.8rem;  
+    color: var(--bs-6)  ;
+}
+
+::placeholder {
+    color: rgba(105, 105, 105, 0.493);
 }
