@@ -1,0 +1,82 @@
+.phm-nav {
+    background-color: var(--bs-2);
+    color: var(--bs-4);
+    padding: 2rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}   
+
+body {
+    /* background-color: var(--bs-8) !important; */
+}
+
+.phm-greet {
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+    font-size: 2.5rem;
+}
+
+.phm-profile {
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+}
+
+.phm-profile img {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+
+.phm-scopes .scope {
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+    padding: 1rem;
+    background-color: var(--bs-2);
+    border-radius: 2rem;
+}
+
+.phm-scopes .scope img {
+    width: 80%;
+    object-fit: cover;
+}
+
+
+.phm-scopes .scope.blue {
+    background-color: rgb(56, 96, 182);
+}
+
+.blue .scope-img {
+    background-color: rgba(7, 36, 97, 0.5) !important;
+    display: inline-block;
+    padding: 1rem;
+    border-radius: 1.3rem;
+    width: 11rem;
+}
+
+.phm-scopes .scope.red {
+    background-color: rgb(182, 56, 56);
+}
+
+.red .scope-img {
+    background-color: rgba(97, 7, 7, 0.5) !important;
+    display: inline-block;
+    padding: 1rem;
+    border-radius: 1.3rem;
+    width: 11rem;
+}
+
+
+.scope-text {
+    width: 100%;
+}
+
+.scope-text .title {
+    font-size: 2rem;
+    font-weight: 600;
+}

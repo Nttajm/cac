@@ -1,9 +1,9 @@
-body {
+/* body {
     background-color: var(--bs-8) !important;
-}
+} */
 
 nav {
-    background-color: var(--bs-2);
+    background-color: var(--bs-2) !important;
     padding: 1rem;
     display: flex;
     align-items: center;

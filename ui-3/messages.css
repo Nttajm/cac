@@ -1,0 +1,112 @@
+nav .club-emj {
+    width: 3.5rem;
+    height: 3rem;
+    background-color: var(--bs-9);
+    border-radius: 1rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 2.4rem;
+    height: auto;
+    object-fit: cover;
+    border-radius: 1rem;
+}
+
+nav {
+    background-color: var(--bs-3) !important;
+}
+
+.app-messages {
+    display: flex;
+    flex-direction: column;
+    width: 100vw;
+    height: 100vh;
+}
+
+.next {
+    background-color: var(--bs-2);
+    color: var(--bs-4);
+    padding: 0.5rem;
+}
+
+main {
+    height: 80vh;
+    overflow-y: scroll;
+    display: flex;
+    flex-direction: column;
+  }  
+
+  main::-webkit-scrollbar {
+    width: 0.25rem;
+  }
+  
+  main::-webkit-scrollbar-track {
+    background: #1e1e24;
+  }
+  
+  main::-webkit-scrollbar-thumb {
+    background: var(--bs-4);
+  }
+
+.message {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    padding: 1rem;
+    background-color: var(--bs-2);
+    margin: 1rem 0;
+    border-left: 5px solid var(--bs-3);
+}
+
+.info {
+    display: flex;
+    gap: 1rem;
+}
+
+.person {
+    display: flex;
+    gap: 1rem;
+}
+
+.person img {
+    width: 3rem;
+    height: 3rem;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.creator {
+    display: flex;
+    flex-direction: column;
+}
+
+.creator span:first-child {
+    font-size: 0.8rem;
+    font-weight: 400;
+    opacity: 0.5;
+}
+
+.creator span:last-child {
+    font-size: 1.3rem;
+    font-weight: 500;
+}
+
+.text {
+    font-size: 1.5rem;
+    font-weight: 400;
+}
+
+form {
+    display: flex;
+    gap: 1rem;
+    padding: 1rem;
+    background-color: var(--bs-2);
+    margin: 1rem 0;
+}
+.send-btn {
+    background-color: var(--bs-7);
+    color: var(--bs-4);
+    padding: 0.5rem;
+    border-radius: 1rem;
+    cursor: pointer;
+}
