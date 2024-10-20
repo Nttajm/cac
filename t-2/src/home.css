@@ -39,7 +39,15 @@ body {
     padding: 1rem;
     background-color: var(--bs-2);
     border-radius: 2rem;
+    margin-bottom: 1rem;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.274);
 }
+
+.phm-scopes .scope:hover {
+    scale: 1.02;
+    transition: 0.1s;
+}
+
 
 .phm-scopes .scope img {
     width: 80%;

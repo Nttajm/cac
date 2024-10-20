@@ -56,6 +56,11 @@ function App() {
     return (
     <div className="App">
         {user ? <Home /> : <SignIn />}
+        <div className='onLoad'>
+          <div className='onLoad-img-div'>
+            <img src='myndfindlogo.png' alt='MyndFind Logo' className='onLoad-img' />
+          </div>
+        </div>
     </div>
   );
 }
@@ -109,6 +114,8 @@ function Scopes() {
   const [selectedClubId, setSelectedClubId] = useState(null);
   const [clubs, setClubs] = useState([]);
   const [clubChats, setClubChats] = useState([]);
+  const [showHelloWorld, setShowHelloWorld] = useState(false);
+  const [isOverflowHidden, setIsOverflowHidden] = useState(false); // State to control overflow
 
   useEffect(() => {
     const scopesRef = collection(firestore, 'scopes');
@@ -151,8 +158,14 @@ function Scopes() {
     return () => unsubscribe();
   };
 
+  const handleCreateClubClick = () => {
+    setShowHelloWorld(true);
+    setIsOverflowHidden(true); // Set overflow to hidden when "Create" is clicked
+  };
+
   const clubData = clubs.find(club => club.id === selectedClubId);
   const scopeName = scopes.find(scope => scope.id === selectedScopeId)?.name || 'Selected Scope';
+  const scope = scopes.find(scope => scope.id === selectedScopeId);
 
   return (
     <div className='phm-scopes'>
@@ -164,7 +177,7 @@ function Scopes() {
             onClick={() => handleScopeClick(scope.id)}
           >
             <div className="scope-img">
-              <img src="https://lcnjoel.com/images/thspng.png" alt={scope.name} />
+              <img src={scope.img} alt={scope.name} />
             </div>
             <div className="scope-text">
               <span className="title">{scope.name}</span>
@@ -175,45 +188,189 @@ function Scopes() {
         <p>No scopes available</p>
       )}
       {selectedScopeId && (
-        <div className="clubs-section app-holder app-clubs">
+        <div className={`app-holder app-clubs ${isOverflowHidden ? 'overflow-hidden' : ''}`}>
           <nav>
             <div className="scope-img">
-              <img src="thspng.png" alt={scopeName} />
+              <img src={''} alt={scopeName} /> 
             </div>
             <div className="scope-text">
               <span className="title">{scopeName}</span>
             </div>
           </nav>
           <div className='cont'>
-            <input type="text" className="inp-2" placeholder={scopeName}></input>
-            
-            {clubs.length > 0 ? (
-              clubs.map((club) => (
-                <div
-                  className="club"
-                  key={club.id}
-                  onClick={() => handleClubClick(club.id)}
-                >
-                  <div className="club-emj">{club.letter}</div>
-                  <div className="club-info">
-                    <span className="club-name">{club.name}</span>
-                    <div className="tags">
-                      <span>Weekly</span>
-                      <span>Room 23</span>
-                    </div>
-                  </div>
-                </div>
-              ))
-            ) : (
-              <p>No clubs available for this scope</p>
+            <input type="text" className="inp-2" placeholder={scopeName} />
+            <ClubsSchedule clubs={clubs} handleClubClick={handleClubClick} />
+            <div className="bubble create-club">
+              <button className="btn-3" onClick={handleCreateClubClick}>
+                  Create a club
+              </button>
+            </div>
+            <Clubs clubs={clubs} scopeName={scopeName} handleClubClick={handleClubClick} />
+            {showHelloWorld && (
+              <CreateClub />
             )}
           </div>
         </div>
       )}
-      {clubData && selectedClubId && (
-        <Chats clubData={clubData} isValid={true} clubChats={clubChats} selectedScopeId={selectedScopeId} />
-      )}
+    {clubData && selectedClubId && (
+      <Chats clubData={clubData} isValid={true} clubChats={clubChats} selectedScopeId={selectedScopeId} />
+    )}
+  </div>
+  );
+}
+
+
+function CreateClub() {
+  const [selectedDay, setSelectedDay] = useState("monday"); // default day
+  const [selectedFrequency, setSelectedFrequency] = useState("weekly"); // default frequency
+
+  const days = ["monday", "tuesday", "wednesday", "thursday", "friday", "saturday", "sunday"];
+  const dayLabels = ["M", "T", "W", "TH", "F", "S", "SU"];
+
+  const frequencies = ["weekly", "bi-weekly", "monthly"];
+
+  return (
+    <div className="create customscroll">
+      <h1>My club</h1>
+      <form action="">
+        <div className="input-sec">
+          <div className="form-input" id="name-of-club">
+            <label htmlFor="name">Club name</label>
+            <span className="ex">EX: athlete recognition club</span>
+            <input type="text" id="club-name" className="inp-3" />
+          </div>
+          <div className="form-input">
+            <label htmlFor="name">Letter/Emoji</label>
+            <span className="ex">pick an emoji or letter to describe your club</span>
+            <input type="text" id="club-emoji" className="inp-3" />
+          </div>
+        </div>
+        <div className="input-sec">
+          <div className="form-input">
+            <label htmlFor="description">Description</label>
+            <span className="ex">EX: To make sports stand out......</span>
+            <textarea id="club-description" className="inp-3"></textarea>
+          </div>
+        </div>
+        <div className="input-sec">
+          <div className="form-input">
+            <label htmlFor="location">Room Number or Location</label>
+            <span className="ex">EX: C4</span>
+            <input type="text" id="club-location" className="inp-3" />
+          </div>
+        </div>
+        <h1>Schedule</h1>
+        <span>What days will you meet? </span>
+        <div className="selecter">
+          {days.map((day, index) => (
+            <span
+              key={day}
+              className={`day ${selectedDay === day ? "selected" : ""}`}
+              onClick={() => setSelectedDay(day)}
+            >
+              {dayLabels[index]}
+            </span>
+          ))}
+        </div>
+        <div className="selecter">
+          {frequencies.map((freq) => (
+            <span
+              key={freq}
+              className={`freq ${selectedFrequency === freq ? "selected" : ""}`}
+              onClick={() => setSelectedFrequency(freq)}
+            >
+              {freq}
+            </span>
+          ))}
+        </div>
+        <div className="option">
+          <span>Start time</span>
+          <input type="time" className="inp-3" />
+        </div>
+        <h2>Usability</h2>
+        <div className="option fl-r fl-jsp-b">
+          <div className="fl-c">
+            <span>Read only</span>
+            <span className="ex">
+              Make your club read only, only the club creator can post.
+            </span>
+          </div>
+          <input type="checkbox" />
+        </div>
+        <button className="btn-3" id="last-btn">Let's Go</button>
+      </form>
     </div>
+  );
+}
+
+function ClubsSchedule({ clubs, handleClubClick }) {
+  const today = new Date();
+  const options = { weekday: 'long', month: 'long', day: 'numeric' };
+  const formattedDate = today.toLocaleDateString('en-US', options);
+  const clubToday = today.toLocaleDateString('en-US', { weekday: 'long' }).toLowerCase();
+
+  const todaysClubs = clubs.filter(club => club.day && club.day.trim().toLowerCase() === clubToday);
+
+  return (
+    <>
+      <div className="bubble right-now">
+        <h1>{formattedDate}</h1>
+        <div className="sub-club-sec">
+        {todaysClubs.length > 0 ? (
+          todaysClubs.map((club) => (
+              <div className="sub-club" key={club.id}>
+                <div className="top">
+                  <div className="club-emj">{club.letter}</div>
+                  <div className="club-info">
+                    <span className="club-name">{club.name}</span>
+                    <div className="tags">
+                      <span>{club.frequency}</span>
+                      <span>{club.room}</span>
+                    </div>
+                  </div>
+                </div>
+                <div className="button-sec">
+                  <button className="btn" 
+                  onClick={() => handleClubClick(club.id)}
+                  >Go to club</button>
+                </div>
+              </div>
+          ))
+        ) : (
+          <p>No clubs available for today :(</p>
+        )}
+      </div>
+        </div>
+    </>
+  );
+}
+
+
+function Clubs ({ clubs, scopeName, handleClubClick }) {
+  return (
+    <>
+      {clubs.length > 0 ? (
+        clubs.map((club) => (
+          <div
+            className="club"
+            key={club.id}
+            onClick={() => handleClubClick(club.id)}
+          >
+            <div className="club-emj">{club.letter}</div>
+            <div className="club-info">
+              <span className="club-name">{club.name}</span>
+              <div className="tags">
+                <span>{club.frequency}</span>
+                <span>{club.room}</span>
+                {/* <span>{club.day}</span> */}
+              </div>
+            </div>
+          </div>
+        ))
+      ) : (
+        <p>No clubs available for this scope :(</p>
+      )}
+    </>
   );
 }
 
@@ -242,7 +399,7 @@ function Chats({ clubData, isValid, clubChats, selectedScopeId }) {
   };
 
   return (
-    <div className={isValid ? 'club-chats-section app-holder show' : 'club-chats-section app-holder'}>
+    <div className={isValid ? 'club-chats-section app-holder' : 'club-chats-section app-holder'}>
       <nav>
         <div className="club-emj">
           {clubData.letter}
@@ -251,26 +408,30 @@ function Chats({ clubData, isValid, clubChats, selectedScopeId }) {
           <span className="title">{clubData.name}</span>
         </div>
       </nav>
+      <main>
       {clubChats.length > 0 ? (
-        clubChats.map((chat) => (
-          <div className={'message ' + (chat.uid === auth.currentUser.uid ? 'sent' : 'received' + messageType)} key={chat.id}>
-            <span className="text">
-              {chat.message}
-            </span>
-            <div className="info">
-              <div className="person">
-                <img src={chat.photoURL || 'https://api.adorable.io/avatars/23/abott@adorable.png'} alt="User Avatar" />
-              </div>
-              <div className="creator">
-                <span>{new Date(chat.createdAt?.toDate()).toLocaleString()}</span>
-                <span>Joel</span>
+        clubChats
+          .sort((a, b) => a.createdAt?.toDate() - b.createdAt?.toDate())
+          .map((chat) => (
+            <div className={'message ' + (chat.uid === auth.currentUser.uid ? 'sent' : 'received' + messageType)} key={chat.id}>
+              <span className="text">
+                {chat.message}
+              </span>
+              <div className="info">
+                <div className="person">
+                  <img src={chat.photoURL || 'https://api.adorable.io/avatars/23/abott@adorable.png'} alt="User Avatar" />
+                </div>
+                <div className="creator">
+                  <span>{new Date(chat.createdAt?.toDate()).toLocaleString()}</span>
+                  <span>{chat.uid === auth.currentUser.uid ? 'You' : chat.displayName}</span>
+                </div>
               </div>
             </div>
-          </div>
-        ))
+          ))
       ) : (
-        <p>No chats available for this club</p>
+        <p>No chats available for this club :(</p>
       )}
+      </main>
       <span ref={dummy}></span>
       <form onSubmit={sendMessage}>
         <input
@@ -280,7 +441,7 @@ function Chats({ clubData, isValid, clubChats, selectedScopeId }) {
           value={formValue}
           onChange={(e) => setFormValue(e.target.value)}
         />
-        <button type="submit" className="send-btn" disabled={!formValue}>Send</button>
+        <button type="submit" className="send-btn" disabled={!formValue}>send IT</button>
       </form>
     </div>
   );

@@ -20,6 +20,11 @@
             <span class="title">Technology High School</span>
         </div>
     </nav>
+    <div class="onLoad">
+        <div class="onLoad-img-div">
+            <img src="myndfinglogo.png" alt="">
+        </div>
+    </div>
     <div class="cont">
         <input type="text" class="inp-2" placeholder="Search Technology Hig...">
         <div class="bubble right-now">
@@ -57,10 +62,15 @@
                         </div>
                     </div>
                     <div class="button-sec">
-                        <button>Go to club</button>
+                        <button class="btn">Go to club</button>
                     </div>
                 </div>
             </div>
+    </div>
+    <div class="bubble create-club">
+        <button class="btn-3">
+            Create a club
+        </button>
     </div>
     <h1>Clubs</h1>
     <div class="club-sec">
@@ -88,7 +98,72 @@
                 </div>
             </div>
         </div>
+
         
+    </div>
+    <div class="create customscroll">
+        <h1>
+            My club
+        </h1>
+        <form action="">
+            <div class="input-sec">
+                <div class="form-input" id="name-of-club">
+                    <label for="name">Club name</label>
+                    <span class="ex">EX: athlete recognition club</span>
+                    <input type="text" id="club-name" class="inp-3">
+                </div>
+                <div class="form-input">
+                    <label for="name">Letter/Emoji</label>
+                    <span class="ex">pick a an emoji or letter to describe your club</span>
+                    <input type="text" id="club-name" class="inp-3">
+                </div>
+            </div>
+            <div class="input-sec">
+                <div class="form-input">
+                    <label for="name">Discriptiom</label>
+                    <span class="ex">EX: To make make sports stand out......</span>
+                    <textarea type="text" id="club-name" class="inp-3"></textarea>
+                </div>
+            </div>
+            <div class="input-sec">
+                <div class="form-input">
+                    <label for="name">Room Number or Location</label>
+                    <span class="ex">EX: C4</span>
+                    <input type="text" id="club-name" class="inp-3">
+                </div>
+            </div>
+            <h1>Schedule</h1>
+            <span>What days will you meet? </span>
+            <div class="selecter">
+                <span class="day selected" id="monday">M</span>
+                <span class="day" id="tuesday">T</span>
+                <span class="day" id="wednesday">W</span>
+                <span class="day" id="thursday">TH</span>
+                <span class="day" id="friday">F</span>
+                <span class="day" id="saturday">S</span>
+                <span class="day" id="sunday">SU</span>
+            </div>
+            <div class="selecter">
+                <span class="freq selected">weekly</span>
+                <span class="freq">bi-weekly</span>
+                <span class="freq">monthly</span>
+            </div>
+            <div class="option">
+                <span>Start time</span>
+                <input type="time" class="inp-3">
+            </div>
+            <h2>Usability</h2>
+            <div class="option fl-r fl-jsp-b">
+                <div class="fl-c">
+                    <span>Read only</span>
+                    <span class="ex">
+                        Make your club read only, only the club creator can post.
+                    </span>
+                </div>
+                <input type="checkbox">
+            </div>
+            <button class="btn-3" id="last-btn">Let's Go</button>
+        </form>
     </div>
 </body>
 </html>

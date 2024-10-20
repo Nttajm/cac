@@ -171,10 +171,25 @@ form input {
     transition: all 0.5s;
 }
 
-input[type="checkbox"] {
-    display: none;
-    cursor: pointer;
+.customscroll {
+    overflow-y: auto;
+    height: 100%;
 }
+
+.customscroll::-webkit-scrollbar {
+    width: 0.5rem;
+}
+
+.customscroll::-webkit-scrollbar-thumb {
+    background-color: var(--bs-10);
+    border-radius: 1rem;
+}
+
+.customscroll::-webkit-scrollbar-track {
+    background-color: var(--bs-2);
+}
+
+
 
 
 /* Screen breakpoints */

@@ -25,10 +25,32 @@ body {
     color: white;
 }
 
+.customscroll {
+    overflow-y: auto;
+    height: 100%;
+}
+
+.customscroll::-webkit-scrollbar {
+    width: 0.5rem;
+}
+
+.customscroll::-webkit-scrollbar-thumb {
+    background-color: var(--bs-10);
+    border-radius: 1rem;
+}
+
+.customscroll::-webkit-scrollbar-track {
+    background-color: var(--bs-2);
+}       
+
+.overflow-hidden {
+    overflow: hidden !important;
+}
+
 .App {
     position: absolute;
     top: 50%;
-    left: 50%;
+    left: 50%; 
     transform: translate(-50%, -50%);
     width: 100vw;
     height: 100vh;
@@ -42,6 +64,49 @@ body {
     transform: translate(-50%, -50%);
     width: 100vw;
     height: 100vh;
+    overflow-y: auto;
+}
+
+.app-holder::-webkit-scrollbar {
+    width: 0.25rem;
+}
+
+.app-holder::-webkit-scrollbar-track {
+    background: #1e1e24;
+}
+
+.app-holder::-webkit-scrollbar-thumb {
+    background: var(--bs-4);
+}
+
+.app-holder::-webkit-scrollbar-thumb:hover {
+    background: var(--bs-3);
+}
+
+/* .show {
+    animation: toLeft 0.5s ease forwards; 
+}
+
+@keyframes toLeft {
+    0% {
+        transform: translate(-50%, -50%);
+    }
+    100% {
+        transform: translate(0%, -50%);
+    }
+}
+
+.no-show {
+    animation: toRight 0.5s ease forwards; 
+}
+
+@keyframes toRight {
+    0% {
+        transform: translate(0%, -100%);
+    }
+    100% {
+        transform: translate(-50%, -50%);
+    }
 }
 
 .stepBystep {
@@ -54,14 +119,19 @@ body {
     flex-direction: column; 
     box-sizing: border-box;
     padding: 2rem;
-}
+} */
 
 .app-home {
     background-color: var(--bs-8);
 }
 
+.show {
+    display: none !important;
+}
+
 .app-clubs {
     background-color: var(--bs-8);
+    display: block;
 }
 
 .stepBystep form {
@@ -233,11 +303,7 @@ input[type="checkbox"] {
 }
 
 @media (min-width: 576px) and (max-width: 768px) {
-    .club-chats-section {
-        display: flex;
-        gap: 1rem;
-        position: static;
-    }
+
 }
 
 @media (min-width: 768px) and (max-width: 992px) {

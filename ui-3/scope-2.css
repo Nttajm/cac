@@ -153,3 +153,202 @@ nav {
     padding: 0.2rem 0.3rem;
     font-size: 1rem;
 }
+
+.onLoad {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: var(--bs-3);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 100;
+    animation: goUp 1s forwards;
+    animation-delay: 1s;
+    pointer-events: none;
+} 
+
+.onLoad img {
+    width: 100%;
+    height: auto;
+    object-fit: cover;
+    animation: open 1s ease forwards; 
+}
+
+.onLoad-img-div {
+    width: 50%;
+    animation: goDown 1s forwards;
+    animation-delay: 1s;
+}
+
+
+
+@keyframes open {
+    0% {
+        opacity: 0;
+        filter: blur(10px);
+    }
+    100% {
+        opacity: 1;
+    }
+}
+
+@keyframes goUp {
+    0% {
+        transform: translateY(0);
+    }
+    100% {
+        transform: translateY(-100%);
+    }
+}
+
+@keyframes goDown {
+    0% {
+        transform: translateY(0);
+    }
+    100% {
+        transform: translateY(100vh);
+        opacity: 0;
+        filter: blur(30px);
+    }
+}
+
+.create-club {
+    padding: 1rem;
+    display: flex;
+    flex-direction: row;
+}
+
+.btn-3 {
+    background: rgb(22,179,100);
+background: -moz-linear-gradient(103deg, rgba(22,179,100,1) 0%, rgba(172,177,6,1) 100%);
+background: -webkit-linear-gradient(103deg, rgba(22,179,100,1) 0%, rgba(172,177,6,1) 100%);
+background: linear-gradient(103deg, rgba(22,179,100,1) 0%, rgba(172,177,6,1) 100%);
+filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#16b364",endColorstr="#acb106",GradientType=1);
+    color: var(--bs-4);
+    padding: 0.5rem;
+    border-radius: 1rem;
+    width: 100%;
+    font-size: 1.5rem;
+}
+
+input[type='checkbox'] {
+
+}
+
+.create {
+    position: absolute;
+    z-index: 1000;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: var(--bs-2);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    overflow-y: auto;
+    border-radius: 3rem;
+    transform: translateY(2%);
+    border: solid 0.5rem var(--bs-8);
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    width: 100%;
+    padding: 1rem;
+}
+
+.input-sec {
+    display: flex;
+    gap: 1rem;
+    align-items: flex-end;
+    width: 100%;
+}
+
+.form-input {
+    display: flex;
+    flex-direction: column;
+    align-content: space-between;
+    width: 100%;
+}
+
+.inp-3, textarea {
+    padding: 1rem;
+    border-radius: 1rem;
+    background-color: var(--bs-10);
+    color: var(--bs-4);
+    font-size: 1.5rem;
+    width: 100% !important;
+    border: none;
+    outline: none;
+    resize: vertical;
+}
+
+.form-input label {
+    font-size: 1.5rem;
+    font-weight: 500;
+}
+
+.ex {
+    opacity: 0.5;
+    font-size: 0.8rem;
+}
+
+#name-of-club {
+    width: 170%;
+}
+
+.selecter {
+    background-color: var(--bs-1);
+    padding: 0.4rem 0.6rem;
+    border-radius: 1rem;
+    font-size: 2rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.day.selected {
+    background-color: var(--bs-8);
+    color: var(--bs-4);
+    border-radius: 1rem;
+    padding: 0.5rem 1rem;
+    color: var(--bs-3);
+}
+
+.day {
+    color: var(--bs-4);
+    border-radius: 1rem;
+    padding: 0.5rem 1rem;
+}
+
+.freq {
+    display: flex;
+    gap: 1rem;
+    color: var(--bs-4);
+    border-radius: 1rem;
+    padding: 0.2rem 0.2rem;
+    font-size: 1.8rem;
+    align-items: center;
+    text-align: center;
+    width: 100%;
+    justify-content: center;
+}
+
+.freq.selected {
+    background-color: var(--bs-8);
+    color: var(--bs-4);
+    border-radius: 1rem;
+    padding: 0.5rem 1rem;
+    color: var(--bs-3);
+}
+
+#last-btn {
+    margin-top: 1rem;
+    font-size: 3rem;
+}
