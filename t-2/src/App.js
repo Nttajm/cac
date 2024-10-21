@@ -163,9 +163,25 @@ function Scopes() {
     setIsOverflowHidden(true); // Set overflow to hidden when "Create" is clicked
   };
 
+  const handleCloseCreateClub = () => {
+    setShowHelloWorld(false);
+    setIsOverflowHidden(false); // Optionally reset overflow when closed
+  };
+
   const clubData = clubs.find(club => club.id === selectedClubId);
   const scopeName = scopes.find(scope => scope.id === selectedScopeId)?.name || 'Selected Scope';
   const scope = scopes.find(scope => scope.id === selectedScopeId);
+
+  const UnofficialClubs = clubs.filter(club => club.official === false);
+  
+  const scopeMembersRef = selectedScopeId 
+    ? collection(firestore, 'scopes', selectedScopeId, 'members') 
+    : null;
+
+  const { data: scopeMembers = [] } = useCollectionData(scopeMembersRef); // Using Firestore hook to get members
+
+  // Check if the current user is in the list of scope members
+  const isScopeMember = scopeMembers.some(member => member.uid === auth.currentUser.uid);
 
   return (
     <div className='phm-scopes'>
@@ -191,7 +207,7 @@ function Scopes() {
         <div className={`app-holder app-clubs ${isOverflowHidden ? 'overflow-hidden' : ''}`}>
           <nav>
             <div className="scope-img">
-              <img src={''} alt={scopeName} /> 
+              <img src={scope.img} alt={scopeName} /> 
             </div>
             <div className="scope-text">
               <span className="title">{scopeName}</span>
@@ -205,13 +221,22 @@ function Scopes() {
                   Create a club
               </button>
             </div>
+            <h2>Clubs</h2>
             <Clubs clubs={clubs} scopeName={scopeName} handleClubClick={handleClubClick} />
+            {UnofficialClubs.length > 0 ? (
+              <>
+              <h2>Unofficial</h2>
+              <Clubs clubs={UnofficialClubs} scopeName={scopeName} handleClubClick={handleClubClick} />
+              </>
+            ) : (
+              <p></p>
+            )}
             {showHelloWorld && (
-              <CreateClub />
+              <CreateClub scope={selectedScopeId} onClose={handleCloseCreateClub} isSelected={showHelloWorld} />
             )}
           </div>
         </div>
-      )}
+      ) }
     {clubData && selectedClubId && (
       <Chats clubData={clubData} isValid={true} clubChats={clubChats} selectedScopeId={selectedScopeId} />
     )}
@@ -220,43 +245,127 @@ function Scopes() {
 }
 
 
-function CreateClub() {
-  const [selectedDay, setSelectedDay] = useState("monday"); // default day
-  const [selectedFrequency, setSelectedFrequency] = useState("weekly"); // default frequency
+function CreateClub({ scope, onClose, isSelected }) {
+  const [selectedDay, setSelectedDay] = useState("monday");
+  const [selectedFrequency, setSelectedFrequency] = useState("weekly");
+  const [clubName, setClubName] = useState('');
+  const [clubEmoji, setClubEmoji] = useState('');
+  const [clubDescription, setClubDescription] = useState('');
+  const [clubLocation, setClubLocation] = useState('');
+  const [startTime, setStartTime] = useState('');
+  const [readOnly, setReadOnly] = useState(false);
+  const [error, setError] = useState(null);
 
-  const days = ["monday", "tuesday", "wednesday", "thursday", "friday", "saturday", "sunday"];
-  const dayLabels = ["M", "T", "W", "TH", "F", "S", "SU"];
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    
+    const newClub = {
+      name: clubName,
+      letter: clubEmoji,
+      description: clubDescription,
+      room: clubLocation,
+      day: selectedDay,
+      frequency: selectedFrequency,
+      startTime: startTime,
+      readOnly: readOnly,
+      createdAt: serverTimestamp(),
+      owner: auth.currentUser.uid,
+      official: false,
+    };
 
-  const frequencies = ["weekly", "bi-weekly", "monthly"];
+    // const days = ['monday', 'tuesday', 'wednesday', 'thursday', 'friday']; // Example days
+    // const dayLabels = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri']; // Corresponding labels
+
+
+    try {
+      await addDoc(collection(firestore, 'scopes', scope, 'clubs'), newClub);
+      if (newClub.readOnly === 'askToJoin') {
+        await addDoc(collection(firestore, 'scopes', scope, 'clubs', newClub.id, 'members'), {
+          uid: auth.currentUser.uid,
+          role: 'owner',
+          joinedAt: serverTimestamp(),
+        });
+      }
+      resetForm();
+      onClose(); // Close the form after successful submission
+    } catch (err) {
+      console.error('Error adding document: ', err);
+      setError('Failed to create club. Please try again.');
+    }
+  };
+
+  const resetForm = () => {
+    setClubName('');
+    setClubEmoji('');
+    setClubDescription('');
+    setClubLocation('');
+    setStartTime('');
+    setSelectedDay("monday");
+    setSelectedFrequency("weekly");
+    setReadOnly(false);
+  };
+
+  const days = ['monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday']; // Example days
+  const dayLabels = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun' ]; // Corresponding labels
+  const frequencies = ['weekly', 'bi-weekly', 'monthly']; // Example frequencies
 
   return (
-    <div className="create customscroll">
-      <h1>My club</h1>
-      <form action="">
+    <div className={ isSelected ? 'create customscroll openUp' : 'openDown'}>
+      <div className="close" onClick={onClose}>+</div>
+      <h1>Create My Club</h1>
+      <form onSubmit={handleSubmit}>
+        {error && <p className="error">{error}</p>}
         <div className="input-sec">
           <div className="form-input" id="name-of-club">
             <label htmlFor="name">Club name</label>
             <span className="ex">EX: athlete recognition club</span>
-            <input type="text" id="club-name" className="inp-3" />
+            <input
+              type="text"
+              id="club-name"
+              className="inp-3"
+              value={clubName}
+              onChange={(e) => setClubName(e.target.value)}
+              required
+            />
           </div>
           <div className="form-input">
-            <label htmlFor="name">Letter/Emoji</label>
-            <span className="ex">pick an emoji or letter to describe your club</span>
-            <input type="text" id="club-emoji" className="inp-3" />
+            <label htmlFor="emoji">Letter/Emoji</label>
+            <span className="ex">Pick an emoji or letter to describe your club</span>
+            <input
+              type="text"
+              id="club-emoji"
+              className="inp-3"
+              value={clubEmoji}
+              onChange={(e) => setClubEmoji(e.target.value)}
+              required
+            />
           </div>
         </div>
         <div className="input-sec">
           <div className="form-input">
             <label htmlFor="description">Description</label>
-            <span className="ex">EX: To make sports stand out......</span>
-            <textarea id="club-description" className="inp-3"></textarea>
+            <span className="ex">EX: To make sports stand out...</span>
+            <textarea
+              id="club-description"
+              className="inp-3"
+              value={clubDescription}
+              onChange={(e) => setClubDescription(e.target.value)}
+              required
+            ></textarea>
           </div>
         </div>
         <div className="input-sec">
           <div className="form-input">
             <label htmlFor="location">Room Number or Location</label>
             <span className="ex">EX: C4</span>
-            <input type="text" id="club-location" className="inp-3" />
+            <input
+              type="text"
+              id="club-location"
+              className="inp-3"
+              value={clubLocation}
+              onChange={(e) => setClubLocation(e.target.value)}
+              required
+            />
           </div>
         </div>
         <h1>Schedule</h1>
@@ -285,19 +394,53 @@ function CreateClub() {
         </div>
         <div className="option">
           <span>Start time</span>
-          <input type="time" className="inp-3" />
+          <input
+            type="time"
+            className="inp-3"
+            value={startTime}
+            onChange={(e) => setStartTime(e.target.value)}
+            required
+          />
         </div>
         <h2>Usability</h2>
-        <div className="option fl-r fl-jsp-b">
-          <div className="fl-c">
-            <span>Read only</span>
-            <span className="ex">
-              Make your club read only, only the club creator can post.
-            </span>
-          </div>
-          <input type="checkbox" />
+        <div className="option-s fl-r fl-jsp-b" onClick={() => setReadOnly('readOnly')}>
+        <div className="fl-c">
+          <span>Read only</span>
+          <span className="ex">
+            Make your club read only, only the club creator can post.
+          </span>
         </div>
-        <button className="btn-3" id="last-btn">Let's Go</button>
+        {readOnly === 'readOnly' && <div className="selected-indicator">✔️</div>}
+      </div>
+
+      <div className="option-s fl-r fl-jsp-b" onClick={() => setReadOnly('askToJoin')}>
+        <div className="fl-c">
+          <span>Ask to join</span>
+          <span className="ex">
+            Users must ask to join the club.
+          </span>
+        </div>
+        {readOnly === 'askToJoin' && <div className="selected-indicator">✔️</div>}
+      </div>
+      <div className="option-s fl-r fl-jsp-b" onClick={() => setReadOnly(false)}>
+        <div className="fl-c">
+          <span>Open</span>
+          <span className="ex">
+            Anyone can join and post.
+          </span>
+        </div>
+        {readOnly === false && <div className="selected-indicator">✔️</div>}
+      </div>
+      <div className="option-s fl-r fl-jsp-b" onClick={() => setReadOnly('private')}>
+        <div className="fl-c">
+          <span>Private</span>
+          <span className="ex">
+            Users must be accepted by the club creator and wont see messages untill then.
+          </span>
+        </div>
+        {readOnly === 'private' && <div className="selected-indicator">✔️</div>}
+      </div>
+        <button type="submit" className="btn-3" id="last-btn">Let's Go</button>
       </form>
     </div>
   );
@@ -362,6 +505,7 @@ function Clubs ({ clubs, scopeName, handleClubClick }) {
               <div className="tags">
                 <span>{club.frequency}</span>
                 <span>{club.room}</span>
+                <span>{club.day}</span>
                 {/* <span>{club.day}</span> */}
               </div>
             </div>
@@ -378,6 +522,20 @@ function Chats({ clubData, isValid, clubChats, selectedScopeId }) {
   const [formValue, setFormValue] = useState('');
   const dummy = useRef();
   const [messageType, setMessageType] = useState('alert');
+  const [currentView, setCurrentView] = useState(''); // To track whether to show 'settings' or 'post'
+  const isOwner = clubData.owner === auth.currentUser.uid;
+  const isMember = (clubData?.members || []).includes(auth.currentUser.uid);
+  /**
+   * Checks if the current user is a member of the club.
+   *
+   * @constant {boolean} isMember - True if the current user is a member, false otherwise.
+   * @param {Object} clubData - The data object containing club information.
+   * @param {Array} clubData.members - The array of member UIDs.
+   * @param {Object} auth - The authentication object.
+   * @param {Object} auth.currentUser - The current user object.
+   * @param {string} auth.currentUser.uid - The UID of the current user.
+   */
+
 
   const sendMessage = async (e) => {
     e.preventDefault();
@@ -398,6 +556,39 @@ function Chats({ clubData, isValid, clubChats, selectedScopeId }) {
     }
   };
 
+  const handleMake = (view) => {
+    setCurrentView(view); // Switch the view to either 'settings' or 'post'
+  };
+
+  const getNextMeeting = (club) => {
+    const today = new Date();
+    const day = today.getDay();
+    const clubDay = ["sunday", "monday", "tuesday", "wednesday", "thursday", "friday", "saturday"].indexOf(club.day.toLowerCase());
+    const clubTime = club.startTime.split(':');
+    const clubHour = parseInt(clubTime[0], 10);
+    const clubMinute = parseInt(clubTime[1], 10);
+    const nextMeeting = new Date(today);
+
+    // Calculate the next meeting date based on the frequency
+    if (club.frequency === "weekly") {
+      nextMeeting.setDate(today.getDate() + (clubDay - day + 7) % 7);
+    } else if (club.frequency === "bi-weekly") {
+      const weeksToAdd = (clubDay - day + 14) % 14;
+      nextMeeting.setDate(today.getDate() + weeksToAdd);
+    } else if (club.frequency === "monthly") {
+      nextMeeting.setMonth(today.getMonth() + 1);
+      nextMeeting.setDate(clubDay);
+    }
+
+    nextMeeting.setHours(clubHour);
+    nextMeeting.setMinutes(clubMinute);
+    nextMeeting.setSeconds(0);
+    nextMeeting.setMilliseconds(0);
+
+    const options = { month: 'long', day: 'numeric', hour: 'numeric', minute: 'numeric', hour12: true };
+    return nextMeeting.toLocaleString('en-US', options).replace(',', ' at');
+  };
+
   return (
     <div className={isValid ? 'club-chats-section app-holder' : 'club-chats-section app-holder'}>
       <nav>
@@ -408,46 +599,73 @@ function Chats({ clubData, isValid, clubChats, selectedScopeId }) {
           <span className="title">{clubData.name}</span>
         </div>
       </nav>
+      <div className="club-meet">
+        next meeting: {getNextMeeting(clubData).toLocaleString()}
+      </div>
+
       <main>
-      {clubChats.length > 0 ? (
-        clubChats
-          .sort((a, b) => a.createdAt?.toDate() - b.createdAt?.toDate())
-          .map((chat) => (
-            <div className={'message ' + (chat.uid === auth.currentUser.uid ? 'sent' : 'received' + messageType)} key={chat.id}>
-              <span className="text">
-                {chat.message}
-              </span>
-              <div className="info">
-                <div className="person">
-                  <img src={chat.photoURL || 'https://api.adorable.io/avatars/23/abott@adorable.png'} alt="User Avatar" />
-                </div>
-                <div className="creator">
-                  <span>{new Date(chat.createdAt?.toDate()).toLocaleString()}</span>
-                  <span>{chat.uid === auth.currentUser.uid ? 'You' : chat.displayName}</span>
-                </div>
-              </div>
-            </div>
-          ))
-      ) : (
-        <p>No chats available for this club :(</p>
-      )}
+        {currentView === 'settings' && <div>Settings Component Loaded</div>}
+        {currentView === 'post' && <div>Post Component Loaded</div>}
+          <>
+            {clubChats.length > 0 ? (
+              clubChats
+                .sort((a, b) => a.createdAt?.toDate() - b.createdAt?.toDate())
+                .map((chat) => (
+                  <div className={'message ' + (chat.uid === auth.currentUser.uid ? 'sent' : 'received' + messageType)} key={chat.id}>
+                    <span className="text">
+                      {chat.message}
+                    </span>
+                    <div className="info">
+                      <div className="person">
+                        <img src={chat.photoURL || 'https://api.adorable.io/avatars/23/abott@adorable.png'} alt="User Avatar" />
+                      </div>
+                      <div className="creator">
+                        <span>{new Date(chat.createdAt?.toDate()).toLocaleString()}</span>
+                        <span>{chat.uid === auth.currentUser.uid ? 'You' : chat.displayName}</span>
+                      </div>
+                    </div>
+                  </div>
+                ))
+            ) : (
+              <p>No chats available for this club :(</p>
+            )}
+          </>
       </main>
+
       <span ref={dummy}></span>
-      <form onSubmit={sendMessage}>
+      <div className='chatbtns'>
+        {isOwner ? (
+          <>
+            <span id='cb-edit' onClick={() => handleMake('settings')}>Settings ⚙️</span>
+            <span id='cb-post' onClick={() => handleMake('post')}>Post ✨</span>
+            { clubData.readOnly === 'askToJoin' && ( 
+              <div id='cb-join fl-ai fl-r'>
+                <span>Join requests</span>
+                <span className='howMany'>
+
+                </span>
+              </div>
+            )}
+          </>
+        ) : (
+          <span id='cb-join'>settings</span>
+        )}
+      </div>m
+
+      <form onSubmit={sendMessage} className='fl-r'>
         <input
           type="text"
           className="inp-2"
-          placeholder="Type a message..."
+          placeholder={clubData.readOnly && !isOwner ? 'Read Only' : 'Type a message'}
           value={formValue}
           onChange={(e) => setFormValue(e.target.value)}
+          disabled={clubData.readOnly && !isOwner}
         />
-        <button type="submit" className="send-btn" disabled={!formValue}>send IT</button>
+        <button type="submit" className="send-btn" disabled={!formValue || (clubData.readOnly && !isOwner)}>send IT</button>
       </form>
     </div>
   );
 }
-
-
 
 
 
@@ -459,3 +677,4 @@ function SignOut() {
 
 
 export default App;
+

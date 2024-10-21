@@ -241,13 +241,15 @@ filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#16b364",endCo
     border-radius: 3rem;
     transform: translateY(2%);
     border: solid 0.5rem var(--bs-8);
-    animation: openUp 0.5s forwards cubic-bezier(0, 0, 0, 1);
     padding-bottom: 1rem;
-
 }
 
 .openUp {
-    animation: openUp 1s forwards;
+    animation: openUp 0.5s forwards cubic-bezier(0, 0, 0, 1);
+}
+
+.openDown {
+    animation: openDown 0.5s forwards cubic-bezier(0, 0, 0, 1);
 }
 
 form {
@@ -350,6 +352,23 @@ form {
     font-size: 3rem;
 }
 
+.option-s {
+    padding: 10px;
+    border: 2px solid rgb(122, 117, 117);
+    cursor: pointer;
+    transition: background-color 0.3s;
+    border-radius: 1rem;
+  }
+  
+  .option-s.selected {
+    background-color: #f0f0f0;
+  }
+  
+  .selected-indicator {
+    font-size: 16px;
+    color: green;
+  }
+
 @keyframes open {
     0% {
         opacity: 0;
@@ -389,5 +408,16 @@ form {
     100% {
         transform: translateY(2%);
         scale: 1;
+    }
+}
+
+@keyframes openDown {
+    0% {
+        transform: translateY(2%);
+        scale: 1;
+    }
+    100% {
+        transform: translateY(100%);
+        scale: 0.99;
     }
 }

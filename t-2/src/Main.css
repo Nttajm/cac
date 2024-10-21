@@ -47,6 +47,24 @@ body {
     overflow: hidden !important;
 }
 
+.close {
+    rotate: 45deg;
+    background-color: var(--bs-1);
+    padding: 1rem;
+    border-radius: 50%;
+    width: 0.5rem;
+    height: 0.5rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    font-size: 2rem;
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    z-index: 100;
+}
+
 .App {
     position: absolute;
     top: 50%;
@@ -291,10 +309,6 @@ form input {
     transition: all 0.5s;
 }
 
-input[type="checkbox"] {
-    display: none;
-    cursor: pointer;
-}
 
 
 /* Screen breakpoints */
