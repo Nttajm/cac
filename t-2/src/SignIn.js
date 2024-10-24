@@ -36,6 +36,7 @@ function SignIn() {
         email: user.email,
         photoURL: user.photoURL,
         createdAt: new Date(), // timestamp for when the user was created
+        hasEnteredCode: false, // flag to check if the user has entered a code
       };
 
       // Set the user data in Firestore

@@ -59,6 +59,10 @@ main {
     animation: blur 0.3s ease;
 }
 
+.message.owner {
+    border-left: 5px solid var(--bs-7);
+}
+
 @keyframes blur {
     0% {
         filter: blur(10px);
@@ -118,12 +122,31 @@ form {
     background-color: var(--bs-2);
     margin: 1rem 0;
 }
+
+.join-club {
+    background-color: var(--bs-3);
+    padding: 0.8rem;
+}
+
 .send-btn {
     background-color: var(--bs-7);
     color: var(--bs-4);
-    padding: 0.5rem;
+    padding: 0.3rem 0.6rem;
     border-radius: 1rem;
     cursor: pointer;
+    font-size: 2rem;
+}
+
+.role {
+    background-color: var(--bs-7);
+    opacity: 1 !important;
+    width: fit-content;
+    padding: 2px 4px;
+    border-radius: 0.3rem;
+}
+
+.img-owner {
+    border: var(--bs-7) 2px solid;
 }
 
 button:disabled {

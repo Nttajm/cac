@@ -227,6 +227,10 @@ filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#16b364",endCo
     font-weight: 600;
 }
 
+.btn-n {
+    background: rgb(91, 110, 101);
+}
+
 .create {
     position: fixed;
     z-index: 1000;
@@ -280,7 +284,7 @@ form {
     background-color: var(--bs-10);
     color: var(--bs-4);
     font-size: 1.5rem;
-    width: 100% !important;
+    width: 100% ;
     border: none;
     outline: none;
     resize: vertical;
@@ -368,6 +372,59 @@ form {
     font-size: 16px;
     color: green;
   }
+
+  .btn-5 {
+    background: rgb(22,179,134);
+background: -moz-linear-gradient(103deg, rgba(22,179,134,1) 0%, rgba(6,131,177,1) 100%);
+background: -webkit-linear-gradient(103deg, rgba(22,179,134,1) 0%, rgba(6,131,177,1) 100%);
+background: linear-gradient(103deg, rgba(22,179,134,1) 0%, rgba(6,131,177,1) 100%);
+filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#16b386",endColorstr="#0683b1",GradientType=1);
+    color: var(--bs-4);
+    padding: 0.5rem;
+    border-radius: 1rem;
+    width: 100%;
+    font-size: 1.5rem;
+}
+
+.btn-5-s {
+    background: rgb(22,179,134);
+background: -moz-linear-gradient(103deg, rgba(22,179,134,1) 0%, rgba(6,131,177,1) 100%);
+background: -webkit-linear-gradient(103deg, rgba(22,179,134,1) 0%, rgba(6,131,177,1) 100%);
+background: linear-gradient(103deg, rgba(22,179,134,1) 0%, rgba(6,131,177,1) 100%);
+filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#16b386",endColorstr="#0683b1",GradientType=1);
+    color: var(--bs-4);
+    padding: 0.5rem;
+    border-radius: 1rem;
+    font-size: 1.5rem;
+}
+
+
+.joins {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    padding: 1rem;
+    background-color: var(--bs-1);
+}
+.requester {
+    display: flex;
+    gap: 1rem;
+    padding: 1rem;
+    background-color: var(--bs-2);
+    border-radius: 1rem;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.requester .name {
+    font-size: 2.4rem;
+}
+
+.tag {
+    background-color: var(--bs-3);
+    padding: 0.2rem 0.5rem;
+    color: white;
+}
 
 @keyframes open {
     0% {
