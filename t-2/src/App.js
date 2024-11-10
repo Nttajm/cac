@@ -268,7 +268,7 @@ function ScopeCode({ user, setShowScopeCode }) {
           required
         />
         <button type="submit" className="btn-3">Enter</button>
-        <span onClick={() => { return( <HomeContent /> ) }}>Maybe later</span>
+        <span className='cur' onClick={() => { return( <HomeContent /> ) }}>Maybe later</span>
       </form>
     </div>
   );
@@ -891,8 +891,8 @@ function Chats({ clubData, isValid, clubChats, selectedScopeId }) {
       <div className='club-secs'>
          { clubData.sections && clubData.sections.length > 0 && (
            <div className="sections">
-            <span className="section">@all</span>
-             {clubData.sections.map((section) => (
+            <span className="section" onClick={() => setSelectedSection(false)}>@all</span>
+            {clubData.sections.map((section) => (
                <span key={section} className='section' onClick={changesectionView(section)}>@{section}</span>
              ))}
            </div>
