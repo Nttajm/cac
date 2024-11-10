@@ -266,7 +266,7 @@ function ScopeCode({ user, setShowScopeCode }) {
           required
         />
         <button type="submit" className="btn-3">Enter</button>
-        <span onClick={() => { if (!setShowScopeCode) {window.location.reload(); } else { setShowScopeCode(false); } }}>Maybe later</span>
+        <span onClick={() => { return( <HomeContent /> ) }}>Maybe later</span>
       </form>
     </div>
   );
