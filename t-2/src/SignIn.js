@@ -85,12 +85,8 @@ function SignIn() {
         </div>
         <div className="buttons">
           <div onClick={signInWithGoogle}>
-            <img src="unnamed.png" alt="" />
+            <img src="image.png" alt="" />
             <span>Continue with Google</span>
-          </div>
-          <div className="apple" onClick={signInWithApple}>
-            <img src="apple.png" alt="" />
-            <span>Continue with Apple</span>
           </div>
           <div className="email" onClick={signInWithEmail}>
             <span>Continue with email</span>
