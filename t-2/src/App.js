@@ -180,8 +180,10 @@ function HomeContent({ user, currentUser }) {
         <Scopes />
         <Explore />
       </section>
-      <div className="bubble">
+      <div className="phm-scopes">
+      <div className="scope red">
         <SignOut />
+      </div>
       </div>
     </>
   );
@@ -458,11 +460,6 @@ function CreateClub({ scope, onClose, isSelected, isSettings, clubData }) {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-
-    const sectionsTotext = sections.join(', ').replace(/,([^,]*)$/, ' and$1');
-    console.log(sectionsTotext);
-    console.log(sectionsTotext);
-
     const newClub = {
       name: clubName,
       letter: clubEmoji,
@@ -627,7 +624,7 @@ function CreateClub({ scope, onClose, isSelected, isSettings, clubData }) {
         <div className='sections-div'>
         {sections.map((section) => (
           <div className="section" key={section}>
-            <div className="fl-r fl-jsp-b">
+            <div className="fl-r fl-jsp-b w-100">
               <span>{section}</span>
               <span className='ex-n' onClick={() => removeSection(section)}>X</span> {/* Remove button */}
             </div> 
@@ -874,6 +871,10 @@ function Chats({ clubData, isValid, clubChats, selectedScopeId }) {
   const [selectedSection, setSelectedSection] = useState(false);
   const filteredChats = selectedSection ? clubChats.filter(chat => chat.messageSection === selectedSection) : clubChats;
 
+  const changesectionView = (section) => () => {
+    setSelectedSection(section);
+  };
+
   return (
     <div className={`club-chats-section app-holder ${isValid ? 'valid' : 'invalid'}`}>
       <nav>
@@ -889,10 +890,10 @@ function Chats({ clubData, isValid, clubChats, selectedScopeId }) {
       </div>
       <div className='club-secs'>
          { clubData.sections && clubData.sections.length > 0 && (
-           <div className="club-sec">
-            <span className="sec">@all</span>
+           <div className="sections">
+            <span className="section">@all</span>
              {clubData.sections.map((section) => (
-               <span key={section} className='sec'>@{section}</span>
+               <span key={section} className='section' onClick={changesectionView(section)}>@{section}</span>
              ))}
            </div>
          )}
@@ -903,7 +904,7 @@ function Chats({ clubData, isValid, clubChats, selectedScopeId }) {
           {filteredChats.length > 0 ? (
             filteredChats
               .sort((a, b) => a.createdAt?.toDate() - b.createdAt?.toDate())
-              .map((chat) => (
+              .map((chat) => (  
                 <div 
                 className={`message ${chat.uid === auth.currentUser.uid ? 'sent' : 'received'} ${messageType} ${chat.uid === owner ? 'owner' : ''}`}
                  key={chat.id}
@@ -994,8 +995,56 @@ function Chats({ clubData, isValid, clubChats, selectedScopeId }) {
   );
 }
 
-function Post({ clubData }) {
-  return 
+function Post({ clubData, setAnnoucemnt }) {
+
+  const clubSections = clubData.sections || [];
+  
+
+  return (
+    <div class="post">
+            <h3>Section</h3>
+            <div class="sections">
+                <div class="section">
+                    <span>
+                        @Joel
+                    </span>
+                </div>
+                {clubSections && clubSections.map((section) => (
+                  <div class="section">
+                    <span>
+                        @{section}
+                    </span>
+                </div>
+                ))
+                  
+                }
+                
+            </div>
+            <h3>Type</h3>
+            <div class="sections">
+                <div class="section">
+                    <span>
+                        Announcement
+                    </span>
+                </div>
+                <div class="section">
+                    <span>
+                        Poll
+                    </span>
+                </div>
+                <div class="section">
+                    <span>
+                        Timed poll
+                    </span>
+                </div>
+                <div class="section">
+                    <span>
+                        Scheduled post
+                    </span>
+                </div>
+            </div>
+        </div>
+  )
 }
 
 function Joins({ clubData, selectedScopeId }) {
@@ -1057,7 +1106,16 @@ function Joins({ clubData, selectedScopeId }) {
           </div>
         ))
       ) : (
-        <NotAvailable text="No requests available." />
+        // <NotAvailable text="No requests available." />
+        <div className="joins">
+    <div className="requester">
+        <div className="person">
+            <img src="pfp-3.jpg" alt="" />
+        </div>
+        <span className="name">Joel</span>
+        <button className="btn-5-s">Accept</button>
+    </div>
+</div>
       )}
     </div>
   );
@@ -1068,13 +1126,13 @@ function Joins({ clubData, selectedScopeId }) {
 
 function SignOut() {
   return auth.currentUser && (
-    <button className="sign-out" onClick={() => signOut(auth)}>Sign Out</button>
+    <button className="sign-out scope red" onClick={() => signOut(auth)}>Sign Out</button>
   );
 }
 
 function NotAvailable({ text }) {
   return (
-    <div className="not-available bubble">
+    <div className="not-available b">
       <span>{text}</span>
     </div>
   );

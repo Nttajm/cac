@@ -190,3 +190,30 @@ form {
 #cb-edit {
     background-color: green !important;
 }
+
+
+.post {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    padding: 1rem;
+    background-color: var(--bs-2);
+}
+
+.section {
+    display: flex;
+    background-color: var(--bs-8);
+    padding: 0.5rem;
+    border-radius: 0.5rem;
+}
+
+.section.selected {
+    background-color: var(--bs-7);
+}
+.sections {
+    display: flex;
+    gap: 0.4rem;
+    background-color: var(--bs-1);
+    padding: 0.5rem;
+
+}
